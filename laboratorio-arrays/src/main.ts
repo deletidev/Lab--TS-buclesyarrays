@@ -151,28 +151,48 @@ interface NumeroPacientesPorEspecialidad {
   cardiologia: number;
 }
 
+// const cuentaPacientesPorEspecialidad = (
+//   pacientes: Pacientes[]
+// ): NumeroPacientesPorEspecialidad => {
+//   const numeroPacientes = {
+//     medicoDeFamilia: 0,
+//     pediatria: 0,
+//     cardiologia: 0
+//   };
+
+//   pacientes.forEach(paciente => {
+//     switch (paciente.especialidad) {
+//       case 'Medico de familia':
+//         numeroPacientes.medicoDeFamilia++;
+//         break;
+//       case 'Pediatra':
+//         numeroPacientes.pediatria++;
+//         break;
+//       case 'Cardiólogo':
+//         numeroPacientes.cardiologia++;
+//         break;
+//     }
+//   });
+//   return numeroPacientes;
+// };
+const numeroPacientes = (
+  pacientes: Pacientes[],
+  especialidad: Especialidad
+): number => {
+  return pacientes.reduce((acc, a) => {
+    if (a.especialidad === especialidad) {
+      return ++acc;
+    } else {
+      return acc;
+    }
+  }, 0);
+};
+
 const cuentaPacientesPorEspecialidad = (
   pacientes: Pacientes[]
-): NumeroPacientesPorEspecialidad => {
-  const numeroPacientes = {
-    medicoDeFamilia: 0,
-    pediatria: 0,
-    cardiologia: 0
-  };
-
-  pacientes.forEach(paciente => {
-    switch (paciente.especialidad) {
-      case 'Medico de familia':
-        numeroPacientes.medicoDeFamilia++;
-        break;
-      case 'Pediatra':
-        numeroPacientes.pediatria++;
-        break;
-      case 'Cardiólogo':
-        numeroPacientes.cardiologia++;
-        break;
-    }
-  });
-  return numeroPacientes;
-};
+): NumeroPacientesPorEspecialidad => ({
+  medicoDeFamilia: numeroPacientes(pacientes, 'Medico de familia'),
+  pediatria: numeroPacientes(pacientes, 'Pediatra'),
+  cardiologia: numeroPacientes(pacientes, 'Cardiólogo')
+});
 console.log(cuentaPacientesPorEspecialidad(pacientes));
